@@ -1,0 +1,56 @@
+[
+  {
+    "day": 1,
+    "title": "Introduction to Tailoring",
+    "summary": "Tailoring involves cutting, sewing, and finishing fabric to create clothing. It’s a high-demand skill in local markets.",
+    "tip": "Start by learning fabric types and simple hand stitches."
+  },
+  {
+    "day": 2,
+    "title": "Barbing Basics",
+    "summary": "Barbing requires hygiene, steady hands, and knowledge of hair patterns. Learn clipper handling and style names.",
+    "tip": "Practice fade cuts using a mirror and simple styles first."
+  },
+  {
+    "day": 3,
+    "title": "Phone Repair 101",
+    "summary": "Start with recognizing phone parts: screen, battery, motherboard. Learn safe disassembly and power flow.",
+    "tip": "Buy cheap broken phones to practice your repair skills."
+  }
+]
+[
+  {
+    "day": 1,
+    "title": "Tailoring Basics",
+    "summary": "Cutting and sewing skills help you create clothes. Start by learning fabric types and hand stitching.",
+    "tip": "Use scrap cloth to practice simple stitching patterns."
+  },
+  {
+    "day": 2,
+    "title": "Phone Repair Intro",
+    "summary": "Phone repair starts with recognizing parts: screen, battery, circuit. Learn how to open phones safely.",
+    "tip": "Buy broken phones to test on — watch teardown tutorials online."
+  },
+  {
+    "day": 3,
+    "title": "Soap Making",
+    "summary": "Soap making is profitable and simple. You need caustic soda, oil, and fragrance.",
+    "tip": "Always wear gloves and stir slowly in an open space."
+  }
+]
+
+❓ quizzes/day1.json
+
+{
+  "question": "Which of the following is a basic tailoring tool?",
+  "options": {
+    "a": "Hammer",
+    "b": "Needle",
+    "c": "Pliers"
+  },
+  "answer": "b"
+}
+
+
+
+

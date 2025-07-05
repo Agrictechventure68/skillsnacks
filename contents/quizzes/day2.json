@@ -1,0 +1,9 @@
+{
+  "question": "What tool helps identify phone parts during repair?",
+  "options": {
+    "a": "Screwdriver set",
+    "b": "Paintbrush",
+    "c": "Glue gun"
+  },
+  "answer": "a"
+}
