@@ -1,0 +1,20 @@
+. .gitignore
+
+# Environment files
+.env
+
+# Python cache
+_pycache_/
+*.pyc
+
+# Node.js modules
+node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+

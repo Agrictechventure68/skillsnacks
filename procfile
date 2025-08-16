@@ -1,0 +1,6 @@
+ Procfile (Flask example)
+
+web: gunicorn app:app
+
+(For Node.js, replace with web: node server.js)
+
