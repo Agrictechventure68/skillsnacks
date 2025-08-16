@@ -65,5 +65,52 @@ footer {
   background: #009688;
   color: white;
 }
+#skill-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+}
+
+#buttons {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+#skill-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: auto;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
 
