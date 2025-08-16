@@ -5,7 +5,7 @@ Bite-Sized Learning, Big Impact — Skills You Can Use, Anywhere.
 SkillSnacks is an AI-powered EdTech platform delivering micro-vocational lessons that anyone can complete at their own pace.
 From tailoring to phone repairs, digital literacy, and more — each "SkillSnack" is practical, engaging, and accessible on any device.
 
-> MISSION: Equip youth, artisans, job seekers, and underserved communities with marketable skills — one small lesson at a time.
+> MISSION: Equip youth, artisans, job seekers, and underserved communities with real-world and marketable skills — one small lesson at a time.
 
 
 🌍 WHY SkillSnacks MATTERS
@@ -63,20 +63,13 @@ We aim to reduce unemployment, improve self-reliance, and foster small business 
 🔌 API ENDPOINTS (MVP)
 
 * POST /auth/register – Register user
-
 * POST /auth/login – Login user
-
 * GET /skills – List all skills
-
-GET /skills/:id – Get skill detail
-
-POST /progress – Update user progress
+* GET /skills/:id – Get skill detail
+* POST /progress – Update user progress
 
 
-
----
-
-🖥 Local Development
+🖥 LOCAL DEVELOPMENT
 
 # 1. Clone repo
 git clone https://github.com/Agrictechventure68/SkillsSnacks.git
@@ -93,9 +86,7 @@ npm install
 npm run dev
 
 
----
-
-📈 Roadmap
+📈 ROADMAP
 
 MVP (0–3 months)
 ✅ Core features (auth, browse, view, track)
@@ -103,45 +94,30 @@ MVP (0–3 months)
 ✅ Seed with 10 skill modules
 🔄 Pilot test with 20 users
 
-Phase 2 (3–6 months)
-
-AI-based skill recommendations
-
-Multi-language support
-
-Offline mode
+PHASE 2 (3–6 months)
+* AI-based skill recommendations
+* Multi-language support
+* Offline mode
 
 
-Phase 3 (6–12 months)
-
-Payment gateway for premium modules
-
-Peer mentorship features
-
-Community forum
+PHASE 3 (6–12 months)
+* Payment gateway for premium modules
+* Peer mentorship features
+* Community forum
 
 
-
----
-
-🤝 Contributing
+🤝 CONTRIBUTING:
 
 1. Fork repository
-
-
 2. Create feature branch: git checkout -b feature-name
-
-
 3. Commit changes: git commit -m "Description"
-
-
 4. Push & open PR
 
 
-📬 Contact
+📬 CONTACT
 
 Founder: Bright Doro
-📧 Email: brightdoro304@gmail.com
+📧 Email: brightdoro304@gmail.com; brivicstarschools@gmail.com
 
 MIT License — Free to use with attribution.
 
