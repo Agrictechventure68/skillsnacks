@@ -1,68 +1,84 @@
-from flask import Flask, request, jsonify
-
-app = Flask(__name__)
-
-@app.route("/bot", methods=["POST"])
-def bot_webhook():
-    data = request.get_json()
-    print(data)
-    return jsonify({"message": "Received!"})
-
-@app.route("/")
-def home():
-    return "SkillSnacks is working!"
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
-{
-  "title": "Catering Basics",
-  "category": "Food & Catering",
-  "introduction": "...",
-  "materials": ["Gas stove", "Pots", "Ingredients"],
-  "steps": ["Step 1...", "Step 2..."],
-  "tips": "...",
-  "assessment": "..."
-}
-from flask import Flask, jsonify
-import os, json
+import os
+import json
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+from module_loader import list_module_files, load_module_by_name, load_all_modules
+from ai_helper import explain_topic
 
 app = Flask(_name_)
+# CORS: allow all for MVP; later restrict to your Vercel domain
+CORS(app, resources={r"/": {"origins": ""}})
 
-QUIZ_FOLDER = "contents/quizzes"
+# --- Paths (supports contents/ at repo root) ---
+BACKEND_DIR = os.path.dirname(os.path.abspath(_file_))
+PROJECT_ROOT = os.path.abspath(os.path.join(BACKEND_DIR, ".."))
+CONTENTS_DIR = os.path.join(PROJECT_ROOT, "contents")
+QUIZ_FOLDER = os.path.join(CONTENTS_DIR, "quizzes")
 
-@app.route('/api/skills/<skill_name>', methods=['GET'])
-def get_skill_data(skill_name):
-    file_path = os.path.join(QUIZ_FOLDER, f"{skill_name}.json")
-    if not os.path.exists(file_path):
+# ---------- Health ----------
+@app.get("/health")
+def health():
+    return jsonify({"status": "ok", "service": "skillsnacks-backend"})
+
+# ---------- Skills (modules) ----------
+@app.get("/api/skills")
+def list_skills():
+    """
+    Returns a list of available module filenames (without .json) and optionally
+    full data if ?full=1
+    """
+    full = request.args.get("full") in ("1", "true", "yes")
+    files = list_module_files()
+    if not full:
+        return jsonify({"skills": files})
+    # full = True -> return all modules content
+    modules = load_all_modules()
+    return jsonify({"skills": modules})
+
+@app.get("/api/skills/<skill_name>")
+def get_skill(skill_name: str):
+    """
+    Return a single skill module by <skill_name> (filename without .json).
+    """
+    data = load_module_by_name(skill_name)
+    if data is None:
         return jsonify({"error": "Skill not found"}), 404
-
-    with open(file_path, 'r') as f:
-        data = json.load(f)
     return jsonify(data)
 
-from flask import Flask, jsonify, send_from_directory
-import os, json
-
-app = Flask(_name_)
-QUIZ_FOLDER = "contents/quizzes"
-
-@app.route('/api/skills/<skill_name>')
-def get_skill_data(skill_name):
-    file_path = os.path.join(QUIZ_FOLDER, f"{skill_name}.json")
+# ---------- Quizzes ----------
+@app.get("/api/quizzes/<quiz_name>")
+def get_quiz(quiz_name: str):
+    """
+    Return a quiz JSON by filename (without .json) from contents/quizzes.
+    """
+    file_path = os.path.join(QUIZ_FOLDER, f"{quiz_name}.json")
     if not os.path.exists(file_path):
-        return jsonify({"error": "Skill not found"}), 404
-    with open(file_path, 'r') as f:
+        return jsonify({"error": "Quiz not found"}), 404
+    with open(file_path, "r", encoding="utf-8") as f:
         return jsonify(json.load(f))
 
-@app.route('/')
-def serve_index():
-    return send_from_directory('frontend', 'index.html')
+# ---------- AI helper (optional endpoint for MVP) ----------
+@app.post("/api/explain")
+def api_explain():
+    """
+    Body: { "topic": "basic phone repair" }
+    Returns an AI-generated explanation or safe fallback if AI key missing.
+    """
+    payload = request.get_json(silent=True) or {}
+    topic = (payload.get("topic") or "").strip()
+    if not topic:
+        return jsonify({"error": "topic is required"}), 400
+    text = explain_topic(topic)
+    return jsonify({"topic": topic, "explanation": text})
 
-@app.route('/<path:path>')
-def serve_static(path):
-    return send_from_directory('frontend', path)
+# ---------- Root ----------
+@app.get("/")
+def root():
+    return jsonify({
+        "message": "SkillSnacks backend is running",
+        "docs": ["/health", "/api/skills", "/api/skills/<name>", "/api/quizzes/<name>", "/api/explain"]
+    })
 
-if _name_ == '_main_':
-    app.run(debug=True)
-
+if _name_ == "_main_":
+    # Local dev only. Render will use gunicorn via Procfile.
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8000")), debug=True)
