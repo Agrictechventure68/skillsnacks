@@ -14,6 +14,7 @@ BACKEND_DIR = os.path.dirname(os.path.abspath(_file_))
 PROJECT_ROOT = os.path.abspath(os.path.join(BACKEND_DIR, ".."))
 CONTENTS_DIR = os.path.join(PROJECT_ROOT, "contents")
 QUIZ_FOLDER = os.path.join(CONTENTS_DIR, "quizzes")
+os.makedirs(QUIZ_FOLDER, exist_ok=True)
 
 # ---------- Health ----------
 @app.get("/health")
@@ -31,7 +32,6 @@ def list_skills():
     files = list_module_files()
     if not full:
         return jsonify({"skills": files})
-    # full = True -> return all modules content
     modules = load_all_modules()
     return jsonify({"skills": modules})
 
@@ -57,7 +57,7 @@ def get_quiz(quiz_name: str):
     with open(file_path, "r", encoding="utf-8") as f:
         return jsonify(json.load(f))
 
-# ---------- AI helper (optional endpoint for MVP) ----------
+# ---------- AI helper ----------
 @app.post("/api/explain")
 def api_explain():
     """
@@ -68,6 +68,7 @@ def api_explain():
     topic = (payload.get("topic") or "").strip()
     if not topic:
         return jsonify({"error": "topic is required"}), 400
+    app.logger.info(f"Explain requested for topic: {topic}")
     text = explain_topic(topic)
     return jsonify({"topic": topic, "explanation": text})
 
@@ -79,6 +80,6 @@ def root():
         "docs": ["/health", "/api/skills", "/api/skills/<name>", "/api/quizzes/<name>", "/api/explain"]
     })
 
-if _name_ == "_main_":
-    # Local dev only. Render will use gunicorn via Procfile.
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", "8000")), debug=True)
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", "8000"))
+    app.run(host="0.0.0.0", port=port, debug=os.environ.get("FLASK_DEBUG") == "1")
