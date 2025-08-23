@@ -1,28 +1,26 @@
-# backend/whatsapp_bot.py
 from flask import Flask, request
 from twilio.twiml.messaging_response import MessagingResponse
-from ai_helper import explain_topic
 
-app = Flask(__name__)
+app = Flask(_name_)
 
-@app.route("/bot", methods=['POST'])
-def bot():
-    msg = request.form.get('Body', '').strip().lower()
+@app.route("/whatsapp", methods=["POST"])
+def whatsapp_reply():
+    """
+    Handle incoming WhatsApp messages and send a response.
+    """
+    incoming_msg = request.values.get("Body", "").lower()
     response = MessagingResponse()
-    reply = response.message
 
-    if "start" in msg:
-        reply.body("Welcome to SkillSnacks! Choose a topic:\na) Digital Skills\nb) Business Basics\nc) Hustler Tips")
-    elif "explain" in msg:
-        reply.body(explain_topic("Today's topic"))
-    elif "quiz" in msg:
-        reply.body("Quiz:\n1. What is digital marketing?\na) ...\nb) ...\nReply with 1a, 1b, etc.")
-    elif "progress" in msg:
-        reply.body("Your progress: (feature coming soon!)")
+    if "hello" in incoming_msg:
+        response.message("👋 Hi there! Welcome to SkillSnacks. How can we help you today?")
+    elif "help" in incoming_msg:
+        response.message("💡 You can ask about courses, resources, or say 'hello' to start.")
     else:
-        reply.body("Reply 'Start' to begin or 'Explain' for help.")
+        response.message("✅ Thanks for reaching out! A SkillSnacks team member will get back to you soon.")
+
     return str(response)
-if __name__ == "__main__":
-    app.run(debug=True)
-    return str(response)
+
+if _name_ == "_main_":
+    # Run locally on port 5000
+    app.run(host="0.0.0.0", port=5000, debug=True)
 
